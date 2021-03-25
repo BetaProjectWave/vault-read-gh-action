@@ -1,0 +1,16 @@
+name: Vault Read secrets
+branding:
+  icon: 'unlock'
+  color: 'blue'
+inputs:
+  secrets:
+    description: 'A comma-delimited list of secret keys to retrieve from VAULT. Those elements will be also available as outputs'
+    required: true
+  env-var:
+    description: 'A flag to expose the secrets as $\{{ env.SECRET_KEY }}'
+    required: false
+    default: '0'
+runs:
+  using: docker
+  image: 894939414795.dkr.ecr.eu-west-1.amazonaws.com/docker-infra:v1.18.0
+  args: [ "bash", "-c", "INPUT_SECRETS=\"${{ inputs.secrets }}\" INPUT_ENV_VAR=\"${{ inputs.env-var }}\" ./.github/actions/vault-read/main.sh "]
