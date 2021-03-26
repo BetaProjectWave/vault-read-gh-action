@@ -9,8 +9,10 @@ inputs:
   env-var:
     description: 'A flag to expose the secrets as $\{{ env.SECRET_KEY }}'
     required: false
-    default: '0'
+    default: '1'
 runs:
   using: docker
-  image: docker://894939414795.dkr.ecr.eu-west-1.amazonaws.com/docker-infra:v1.18.0
-  args: [ "bash", "-c", "INPUT_SECRETS=\"${{ inputs.secrets }}\" INPUT_ENV_VAR=\"${{ inputs.env-var }}\" ./.github/actions/vault-read/main.sh "]
+  image: Dockerfile
+  env:
+    INPUT_SECRETS: ${{ inputs.secrets }}
+    INPUT_ENV_VAR: ${{ inputs.env-var }}
